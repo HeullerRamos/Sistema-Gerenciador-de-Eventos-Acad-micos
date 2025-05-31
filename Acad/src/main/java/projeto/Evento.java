@@ -1,6 +1,7 @@
 package projeto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Evento {
@@ -12,6 +13,8 @@ public class Evento {
     private LocalDate dataFim;
     private String local;
     private int capacidade;
+
+    private ArrayList<Inscricao> inscricoes = new ArrayList<>();
 
     public Evento(String nome, String descricao,
            LocalDate dataInicio, LocalDate dataFim, String local, int capacidade){

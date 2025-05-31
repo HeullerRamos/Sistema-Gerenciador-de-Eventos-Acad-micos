@@ -5,11 +5,12 @@ import projeto.Repositorio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ControllerEvento {
 
     //private Evento evento;
-    private final Repositorio repositorio = Repositorio.getInstancia();
+    Repositorio repositorio = Repositorio.getInstancia();
 
     public Evento criarEvento(String nome, String descricao, LocalDate dataInicio,
                               LocalDate dataFim, String local, int capacidade){
@@ -18,16 +19,10 @@ public class ControllerEvento {
         return temp;
     }
 
-    public void listarEventos(){
-        ArrayList<Evento> eventos = repositorio.getEventos();
-        LocalDate hoje = LocalDate.now();
-
-        for (Evento evento: eventos){
-            if ((hoje.isEqual(evento.getDataInicio()) || hoje.isAfter(evento.getDataInicio()))
-                    && ((hoje.isEqual(evento.getDataFim()))
-                    ||  (hoje.isBefore(evento.getDataFim())))){
-                System.out.println(evento);
-            }
+    public void imprimeEventos(){
+        for(Evento evento : repositorio.getEventos()){
+            System.out.println(evento);
         }
     }
+
 }

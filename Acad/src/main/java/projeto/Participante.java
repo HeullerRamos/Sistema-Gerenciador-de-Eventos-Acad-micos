@@ -1,6 +1,8 @@
 package projeto;
 
 import controllers.ControllerEvento;
+
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Participante {
@@ -12,7 +14,7 @@ public class Participante {
     private String tipo;
 
     protected ControllerEvento controllerEvento = new ControllerEvento();
-
+    public ArrayList<Evento> eventosCriado = new ArrayList<>();
     Participante(){}
 
     public Participante(String nome, String email, String instituicao,String tipo) {
@@ -36,7 +38,20 @@ public class Participante {
         return instituicao;
     }
 
-    public void visualizarEventos(){
-        controllerEvento.listarEventos();
+    public ArrayList<Evento> visualizarEventos(){
+
+        eventosCriado = controllerEvento.listarEventos();
+        controllerEvento.imprimeEventos();
+        return eventosCriado;
     }
+    public Evento selecionarEvento(UUID id){
+       Evento temp =  eventosCriado.stream().filter(evento -> evento.getId().equals(id)).findFirst().orElse(null);
+       return temp;
+    }
+    public Inscricao participarEvento(UUID id){
+        Inscricao temp = new Inscricao(true,this);
+        return temp;
+    }
+
+
 }

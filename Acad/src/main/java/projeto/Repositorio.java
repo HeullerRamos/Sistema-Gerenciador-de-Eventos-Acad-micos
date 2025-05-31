@@ -1,20 +1,20 @@
 package projeto;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Repositorio {
+    private static final Repositorio instancia = new Repositorio();
+    private Repositorio(){
 
+    }
+    public static Repositorio getInstancia(){
+        return instancia;
+    }
     private ArrayList<Participante> participantes = new ArrayList<>();
 
     private ArrayList<Evento> eventos = new ArrayList<>();
 
-    private static Repositorio instancia;
 
-    public  static Repositorio getInstancia() {
-        if (instancia == null) {
-            instancia = new Repositorio();
-        }
-        return instancia;
-    }
 
     public void adicicionarParticipante(Participante participante) {
         participantes.add(participante);
@@ -30,5 +30,10 @@ public class Repositorio {
 
     public ArrayList<Participante> getParticipantes() {
         return participantes;
+    }
+
+    public Evento selecionarEvento(UUID id){
+       Evento temp = eventos.stream().filter(evento -> evento.getId().equals(id)).findFirst().orElse(null);
+        return temp;
     }
 }
