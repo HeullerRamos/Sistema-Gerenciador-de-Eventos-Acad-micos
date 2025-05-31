@@ -9,21 +9,20 @@ public class Participante {
     private String nome;
     private String email;
     private String instituicao;
+    private String tipo;
+
     protected ControllerEvento controllerEvento = new ControllerEvento();
 
     Participante(){}
 
-    Participante(String nome, String email, String instituicao) {
+    public Participante(String nome, String email, String instituicao,String tipo) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.email = email;
         this.instituicao = instituicao;
+        this.tipo = tipo;
     }
 
-    //Isso aqui tem que ir para um controller acredito
-    public static Participante cadastrarParticipante(String nome, String email, String instituicao){
-        return new Participante(nome,email,instituicao);
-    }
 
     public String getNome() {
         return nome;

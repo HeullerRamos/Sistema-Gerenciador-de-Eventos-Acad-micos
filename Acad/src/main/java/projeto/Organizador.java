@@ -7,8 +7,8 @@ public class Organizador extends Participante{
 
     private ArrayList<Evento> meusEventosCriado = new ArrayList<>();
 
-    Organizador(String nome,String email,String instituicao){
-        super(nome,email,instituicao);
+    public Organizador(String nome,String email,String instituicao,String tipo){
+        super(nome,email,instituicao,tipo);
     }
 
     public void cadastrarEvento(String nome, String descricao,LocalDate dataInicio,
