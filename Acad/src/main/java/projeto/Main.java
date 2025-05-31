@@ -1,4 +1,4 @@
-package org.acad;
+package projeto;
 
 import java.time.LocalDate;
 
@@ -11,9 +11,15 @@ public class Main {
         Organizador x = new Organizador("Gu","g@","if");
 
         x.cadastrarEvento("x","y",
-                LocalDate.now(),LocalDate.now(),"a",1);
+                LocalDate.of(2025, 5, 28),
+                LocalDate.of(2025, 12, 12),"a",1);
+
+        x.cadastrarEvento("dsa","231",
+                LocalDate.of(2025, 5, 28),
+                LocalDate.of(2025, 5, 29),"a",1);
 
         x.visualizarEventos();
+
     }
 
 }

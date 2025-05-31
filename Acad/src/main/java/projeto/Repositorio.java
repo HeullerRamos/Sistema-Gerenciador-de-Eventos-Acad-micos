@@ -1,4 +1,4 @@
-package org.acad;
+package projeto;
 import java.util.ArrayList;
 
 public class Repositorio {
