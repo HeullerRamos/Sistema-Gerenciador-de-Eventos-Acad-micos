@@ -7,8 +7,9 @@ import java.util.UUID;
 
 public class ControllerParticipante {
     private Participante participante;
+    Evento evento;
     Repositorio repositorio = Repositorio.getInstancia();
-    public static Participante cadastrarParticipante
+    public  Participante cadastrarParticipante
             (String nome, String email, String instituicao, String tipo){
         if(tipo.equals("Organizador")){
             return new Organizador(nome,email,instituicao,tipo);
@@ -26,13 +27,16 @@ public class ControllerParticipante {
         return eventos;
     }
 
-    public Evento selecionarEvento(UUID id){
-        Evento temp = repositorio.selecionarEvento(id);
-        return temp;
+    public Evento selecionarEvento(int id){
+       evento = participante.selecionarEvento(id);
+       return evento;
+    }
+    public void imprimeEvento(Evento evento){
+        System.out.println(evento);
     }
 
-    public Inscricao participarEvento(UUID idEvento){
-        participante.participarEvento(idEvento);
+    public void participarEvento(Evento evento){
+        participante.participarEvento(evento);
     }
 
 

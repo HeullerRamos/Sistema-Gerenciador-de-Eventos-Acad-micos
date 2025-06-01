@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Organizador extends Participante{
 
+    Repositorio repositorio = Repositorio.getInstancia();
     private ArrayList<Evento> meusEventosCriado = new ArrayList<>();
 
     public Organizador(String nome,String email,String instituicao,String tipo){
@@ -14,11 +15,15 @@ public class Organizador extends Participante{
     public void cadastrarEvento(String nome, String descricao,LocalDate dataInicio,
                                 LocalDate dataFim, String local, int capacidade){
 
-        meusEventosCriado.add(controllerEvento.criarEvento
-                (nome, descricao,dataInicio,dataFim,local,capacidade));
+        Evento temp = new Evento(nome,descricao,dataInicio,dataFim,local,capacidade);
+        meusEventosCriado.add(temp);
+        repositorio.adicicionarEvento(temp);
     }
 
     public ArrayList<Evento> meusEventosCriados(){
+        for(Evento evento : repositorio.getEventos()){
+
+        }
         return meusEventosCriado;
     }
 
@@ -28,4 +33,5 @@ public class Organizador extends Participante{
             System.out.println(evento);
         };
     }
+
 }

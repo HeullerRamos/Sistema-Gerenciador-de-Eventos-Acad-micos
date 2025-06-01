@@ -32,7 +32,7 @@ public class Repositorio {
         return participantes;
     }
 
-    public Evento selecionarEvento(UUID id){
+    public Evento selecionarEvento(int id){
        Evento temp = eventos.stream().filter(evento -> evento.getId().equals(id)).findFirst().orElse(null);
         return temp;
     }

@@ -7,15 +7,17 @@ public class Inscricao {
     private LocalDateTime data;
     private boolean ativa;
     private Participante participante;
-
+    private boolean presenca;
     public Inscricao() {
         this.data = LocalDateTime.now();
+        this.presenca = false;
     }
 
     public Inscricao( boolean ativa, Participante participante) {
         this.data = LocalDateTime.now();
         this.ativa = ativa;
         this.participante = participante;
+        this.presenca = false;
     }
 
     public boolean isAtiva() {
@@ -26,11 +28,19 @@ public class Inscricao {
         this.ativa = ativa;
     }
 
+    public boolean getPresenca() {
+        return presenca;
+    }
+
     public Participante getParticipante() {
         return participante;
     }
 
     public void setParticipante(Participante participante) {
         this.participante = participante;
+    }
+
+    public void setPresenca(boolean presenca) {
+        this.presenca = presenca;
     }
 }

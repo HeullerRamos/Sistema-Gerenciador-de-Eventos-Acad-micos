@@ -5,27 +5,30 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Evento {
-
-    private UUID id;
+    private static int  proximoId = 1;
+    private int id;
     private String nome;
     private String descricao;
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String local;
     private int capacidade;
+    private Organizador organizador;
 
     private ArrayList<Inscricao> inscricoes = new ArrayList<>();
+    private ArrayList<Trabalho> trabalhos = new ArrayList<>();
 
     public Evento(String nome, String descricao,
-           LocalDate dataInicio, LocalDate dataFim, String local, int capacidade){
+           LocalDate dataInicio, LocalDate dataFim, String local, int capacidade,Organizador organizador){
 
-        this.id = UUID.randomUUID();
+        this.id = proximoId++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.local = local;
         this.capacidade = capacidade;
+        this.organizador = organizador;
     }
 
     public String getNome() {
@@ -52,8 +55,33 @@ public class Evento {
         return capacidade;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
+    }
+
+    public Organizador getOrganizador() {
+        return organizador;
+    }
+
+    public void setOrganizador(Organizador organizador) {
+        this.organizador = organizador;
+    }
+
+    public ArrayList<Trabalho> getTrabalhos() {
+        return trabalhos;
+    }
+
+
+
+    public ArrayList<Inscricao> getInscricoes() {
+        return inscricoes;
+    }
+    public void adicionarTrabalho(Trabalho trabalho){
+        trabalhos.add(trabalho);
+
+    }
+    public void adicionarInscricao(Inscricao inscricao){
+        inscricoes.add(inscricao);
     }
 
     @Override
