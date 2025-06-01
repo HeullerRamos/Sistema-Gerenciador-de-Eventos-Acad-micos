@@ -211,13 +211,17 @@ public class MenuTerminal {
 
         cp.imprimirEventos(cp.retornaMeusEventos());
         System.out.print("Insira o ID do evento no qual deseja submeter o trabalho: ");
-        int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
+        int idEvento = lerInteiro("", 1, cp.retornaMeusEventos().size(), scanner);
+
 
         String titulo = lerString("Título do Trabalho: ", scanner);
         String arquivo = lerString("Caminho do Arquivo (simulado): ", scanner);
 
         if (titulo.isEmpty()) { System.out.println("Campo do Título vazio, preencha o campo."); return; }
         if (arquivo.isEmpty()) { System.out.println("Arquivo não enviado."); return; }
+
+        Evento selecionado = cp.retornaMeusEventos().get(idEvento-1);
+        selecionado.adicionarTrabalho(cp.criarTrabalho(titulo,true));
 
         // boolean sucesso = cp.submeterTrabalho(idEvento, titulo, arquivo); // Método ideal
         // if(sucesso) System.out.println("Trabalho submetido com sucesso!");
@@ -347,8 +351,10 @@ public class MenuTerminal {
         String nomeAvaliador = lerString("Nome do Avaliador (para referência): ", scanner);
         String emailAvaliador = lerString("Email do Avaliador: ", scanner);
 
-        // boolean sucesso = co.designarAvaliador(idEvento, emailAvaliador, nomeAvaliador);
-        // if(sucesso) System.out.println("Avaliador designado!"); else System.out.println("Falha.");
+//        Avaliador x = new Avaliador(nomeAvaliador, emailAvaliador);
+//        Evento eventoSelecionado = co.meusEventosCriados().get(idEvento-1);
+//        x.setEventosParaAvaliar(eventoSelecionado);
+
         System.out.println("Avaliador '" + nomeAvaliador + "' designado com sucesso para o evento ID " + idEvento + " (simulado)!");
     }
 

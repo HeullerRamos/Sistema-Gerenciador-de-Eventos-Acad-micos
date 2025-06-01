@@ -67,4 +67,8 @@ public class ControllerParticipante {
         participante.imprimirCertificados();
     }
 
+    public Trabalho criarTrabalho(String titulo, boolean arquivo){
+        return new Trabalho(titulo,arquivo);
+    }
+
 }
