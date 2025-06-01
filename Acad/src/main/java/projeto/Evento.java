@@ -121,9 +121,9 @@ public class Evento {
     System.out.println("id(" + inscricao.getParticipante().getId()+")" + " nome: " + inscricao.getParticipante().getNome());
         }
     }
-    public void setaPresenca(int idAluno,boolean presenca){
+    public void setaPresenca(int idParticipante,boolean presenca){
         for(Inscricao inscricao: inscricoes){
-            if(inscricao.getParticipante().getId() == idAluno){
+            if(inscricao.getParticipante().getId() == idParticipante){
                 inscricao.setPresenca(presenca);
             }
         }

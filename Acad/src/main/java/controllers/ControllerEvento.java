@@ -1,8 +1,6 @@
 package controllers;
 
-import projeto.Evento;
-import projeto.Organizador;
-import projeto.Repositorio;
+import projeto.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,4 +26,7 @@ public class ControllerEvento {
         evento.visualizarInscritos();
     }
 
+    public ArrayList<Participante> getInscritos(){
+        return evento.getInscritos();
+    }
 }

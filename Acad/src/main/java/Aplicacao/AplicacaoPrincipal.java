@@ -11,65 +11,69 @@ public class AplicacaoPrincipal {
     private static Participante participanteLogado;
 
     public static void main(String[] args) {
-        inicializarParticipantesDeExemplo();
+        inicializarParticipantesDeExemplo(); // Para ter contas de teste
+        Repositorio repo = Repositorio.getInstancia(); // Obter instância do repositório
 
-        System.out.println("--- Simulação de Seleção de Usuário 'Logado' ---");
-        System.out.println("Escolha o perfil para esta sessão:");
-        System.out.println("1. Organizador (org.chefe@example.com)");
-        System.out.println("2. Avaliador (aval.expert@example.com)");
-        System.out.println("3. Participante Comum (part.comum@example.com)");
-        System.out.print("Opção: ");
-        // Usando o método lerInteiro da MenuTerminal (assumindo que o scanner é passado ou ela tem o seu)
-        // Para manter simples, AplicacaoPrincipal ainda pode ter seus leitores ou MenuTerminal os expõe.
-        // Por agora, vamos assumir que MenuTerminal.lerInteiro é acessível e usa o scanner passado.
-        int perfilEscolhido = MenuTerminal.lerInteiro("", 1, 3, scanner);
+        boolean rodandoAplicacao = true;
+        while (rodandoAplicacao) {
+            System.out.println("\n=========== Acad-Micos ===========");
+            System.out.println("1. Cadastrar Novo Participante (UC1)");
+            System.out.println("2. Entrar no Sistema");
+            System.out.println("0. Sair da Aplicação");
+            System.out.print("Escolha uma opção: ");
 
+            int escolhaInicial = MenuTerminal.lerInteiro("", 0, 2, scanner);
 
-        Repositorio repo = Repositorio.getInstancia();
-        switch (perfilEscolhido) {
-            case 1:
-                participanteLogado = repo.buscarParticipantePorEmail("org.chefe@example.com");
-                break;
-            case 2:
-                participanteLogado = repo.buscarParticipantePorEmail("aval.expert@example.com");
-                break;
-            case 3:
-                participanteLogado = repo.buscarParticipantePorEmail("part.comum@example.com");
-                break;
-            default:
-                System.out.println("Opção inválida. Selecionando Participante Comum por padrão.");
-                participanteLogado = repo.buscarParticipantePorEmail("part.comum@example.com");
-                break;
-        }
-
-        if (participanteLogado == null) {
-            System.err.println("Participante ativo não pôde ser definido (não encontrado no repositório). Encerrando.");
-            scanner.close();
-            return;
-        }
-
-        // Inicializar MainController com o participante ativo.
-        mainController = new MainController(participanteLogado);
-
-        System.out.println("\nBem-vindo ao Acad-Micos, " + participanteLogado.getNome() + "!");
-
-        boolean executando = true;
-        while (executando) {
-            MenuTerminal.exibirMenuPrincipal(mainController); // Chama o método da classe auxiliar
-            System.out.print("\nEscolha uma opção (ou 0 para Sair da Sessão): ");
-
-            // A numeração de opções agora é gerenciada internamente por MenuTerminal.
-            // O limite aqui deve ser o máximo de opções em qualquer menu + opção de sair.
-            int escolha = MenuTerminal.lerInteiro("", 0, 8, scanner); // Exemplo, ajuste o máximo
-
-            if (escolha == 0) {
-                executando = false;
-                System.out.println("Sessão encerrada.");
-            } else {
-                MenuTerminal.processarEscolhaMenuPrincipal(escolha, mainController, scanner); // Chama o método da classe auxiliar
+            switch (escolhaInicial) {
+                case 1:
+                    // Chama o método de cadastro da MenuTerminal, que interage com o repositório
+                    MenuTerminal.realizarNovoCadastroDeParticipante(scanner, repo);
+                    break;
+                case 2:
+                    // Chama o método de login da MenuTerminal
+                    Participante participanteLogado = MenuTerminal.efetuarLoginPorEmail(scanner, repo);
+                    if (participanteLogado != null) {
+                        // Se o login for bem-sucedido, instancia o MainController com esse participante
+                        mainController = new MainController(participanteLogado);
+                        System.out.println("\nLogin bem-sucedido! Bem-vindo(a), " + participanteLogado.getNome() + ".");
+                        loopSessaoUsuarioLogado(); // Inicia o loop para o usuário logado
+                    } else {
+                        // A mensagem de falha de login já é dada por efetuarLoginPorEmail
+                        // System.out.println("Login falhou. Email ou senha incorretos ou usuário não cadastrado.");
+                    }
+                    break;
+                case 0:
+                    rodandoAplicacao = false;
+                    System.out.println("Aplicação encerrada. Até logo!");
+                    break;
+                default:
+                    System.out.println("Opção inicial inválida.");
+                    break;
             }
         }
         scanner.close();
+    }
+
+    /**
+     * Loop principal para quando um usuário está logado.
+     * Exibe o menu principal do usuário e processa suas escolhas.
+     */
+    private static void loopSessaoUsuarioLogado() {
+        boolean sessaoAtiva = true;
+        while (sessaoAtiva) {
+            MenuTerminal.exibirMenuPrincipal(mainController); // Menu específico do papel
+            System.out.print("\nEscolha uma opção do seu menu (ou 0 para Logout/Voltar ao menu inicial): ");
+            // Ajuste o limite máximo de opções conforme o menu mais extenso (ex: 0 a 8)
+            int escolha = MenuTerminal.lerInteiro("", 0, 8, scanner);
+
+            if (escolha == 0) {
+                sessaoAtiva = false;
+                mainController = null; // Limpa a referência ao MainController da sessão atual
+                System.out.println("Logout realizado. Voltando ao menu inicial...");
+            } else {
+                MenuTerminal.processarEscolhaMenuPrincipal(escolha, mainController, scanner);
+            }
+        }
     }
 
     // Este método pode permanecer aqui ou ser movido para uma classe de inicialização/configuração de dados.

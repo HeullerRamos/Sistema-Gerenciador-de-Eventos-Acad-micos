@@ -136,6 +136,9 @@ public class MainController {
         return this.controllerParticipante;
     }
 
+    public ControllerEvento getControllerEvento() {
+        return this.controllerEvento;
+    }
     // --- Outras ações de fluxo principal (Exemplos) ---
 
     /**

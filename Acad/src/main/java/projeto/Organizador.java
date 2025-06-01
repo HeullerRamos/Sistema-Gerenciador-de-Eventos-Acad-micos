@@ -45,8 +45,8 @@ public class Organizador extends Participante{
             System.out.println(evento);
         };
     }
-    public void adicionarPresenca(Evento evento,int idAluno,boolean presenca){
-        evento.setaPresenca(idAluno,presenca);
+    public void adicionarPresenca(Evento evento,int idParticipante,boolean presenca){
+        evento.setaPresenca(idParticipante,presenca);
     }
 
     public void inserirDataSubmissao(Evento evento,LocalDate dataInicio,LocalDate dataFim){

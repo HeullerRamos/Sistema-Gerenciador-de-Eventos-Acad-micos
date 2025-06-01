@@ -30,8 +30,8 @@ public class ControllerOrganizador {
     public Evento selecionarEvento(int id){
        return evento = organizador.selecionarEvento(id);
     }
-    public void adicionarPresenca(int idAluno,boolean presenca){
-        evento.setaPresenca(idAluno,presenca);
+    public void adicionarPresenca(Evento evento, int idParticipante,boolean presenca){
+        organizador.adicionarPresenca(evento,idParticipante,presenca);
     }
     public void definiPeriodoSubmicao(LocalDate dataInicio,LocalDate dataFim){
         evento.setPeriodoInscricaoIni(dataInicio);

@@ -1,9 +1,6 @@
 package Aplicacao;
 
-import controllers.ControllerAvaliador;
-import controllers.ControllerOrganizador;
-import controllers.ControllerParticipante;
-import controllers.MainController;
+import controllers.*;
 import projeto.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -11,6 +8,57 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class MenuTerminal {
     // --- Métodos para Exibir Menus ---
+    public static void realizarNovoCadastroDeParticipante(Scanner scanner, Repositorio repositorio) {
+        System.out.println("\n--- Cadastrar Novo Participante (UC1) ---");
+        String nomeCompleto = lerString("Nome completo: ", scanner);
+        String email = lerString("E-mail: ", scanner); // PDF UC1 menciona e-mail
+        String instituicao = lerString("Instituição: ", scanner); // PDF UC1 menciona instituição
+
+
+        if (repositorio.buscarParticipantePorEmail(email) != null) {
+            System.out.println("Este e-mail já foi registrado. Use outro e-mail ou tente fazer login."); // (FE-1 do UC1)
+            return;
+        }
+
+
+        System.out.print("Deseja também ter permissões de Organizador neste sistema? (s/n): ");
+        boolean querSerOrganizador = scanner.nextLine().trim().equalsIgnoreCase("s");
+
+        Participante novoParticipante;
+        String tipo = "Participante"; // Tipo padrão
+
+        // Certifique-se que os construtores de Participante e Organizador
+        // aceitam (nome, email, senha, instituicao, tipo).
+        if (querSerOrganizador) {
+            tipo = "Organizador";
+            novoParticipante = new Organizador(nomeCompleto, email, instituicao, tipo);
+        } else {
+            novoParticipante = new Participante(nomeCompleto, email, instituicao, tipo);
+        }
+
+        repositorio.adicionarParticipante(novoParticipante);
+        System.out.println("Usuário '" + nomeCompleto + "' cadastrado com sucesso como " + tipo + "!"); // (Pós-condição do UC1)
+        System.out.println("Agora você pode entrar no sistema com seu e-mail.");
+    }
+
+
+
+    public static Participante efetuarLoginPorEmail(Scanner scanner, Repositorio repositorio) {
+        System.out.println("\n--- Entrar no Sistema ---");
+        String email = lerString("Digite seu e-mail: ", scanner); // Método lerString já existe na sua classe MenuTerminal
+
+        Participante p = repositorio.buscarParticipantePorEmail(email);
+
+        if (p != null) {
+            // Se o participante foi encontrado com o e-mail fornecido, o login é considerado bem-sucedido.
+            // Nenhuma verificação de senha é feita conforme solicitado.
+            return p;
+        } else {
+            System.out.println("Nenhum participante encontrado com este e-mail. Por favor, verifique o e-mail ou cadastre-se.");
+            return null;
+        }
+    }
+
     public static void exibirMenuPrincipal(MainController mainController) {
         System.out.println("\n--- MENU PRINCIPAL ---");
         Participante pAtual = mainController.getParticipanteAtual();
@@ -208,6 +256,7 @@ public class MenuTerminal {
     private static void acaoGerenciarMeusEventos(MainController mainController, Scanner scanner) {
         System.out.println("\n--- Gerenciar Meus Eventos (UC5) ---");
         ControllerOrganizador co = mainController.getControllerOrganizador();
+        ControllerEvento ce = mainController.getControllerEvento();
         if (co == null) { System.out.println("Erro: Acesso às funcionalidades de organizador não disponível."); return; }
 
         System.out.println("Simulação: Listando eventos criados por você...");
@@ -217,7 +266,7 @@ public class MenuTerminal {
         }
         System.out.print("Insira o ID do evento que deseja gerenciar: ");
         co.visualizarMeusEventos();
-        int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
+        int idEvento = lerInteiro("", 0, co.meusEventosCriados().size(), scanner);
 
         System.out.println("Gerenciando Evento ID: " + idEvento);
         System.out.println("Opções de Gerenciamento:");
@@ -235,7 +284,10 @@ public class MenuTerminal {
                 break;
             case 2:
                 System.out.println("'Visualizar Inscritos' (simulado).");
-                // Chamar co.visualizarInscritosEvento(idEvento);
+                (co.meusEventosCriados().get(idEvento-1)).visualizarInscritos();
+                System.out.println("Selecione um Inscrito (id): ");
+                int idParticipante = lerInteiro("", 0, ce.getInscritos().size(), scanner);
+                co.adicionarPresenca(co.meusEventosCriados().get(idEvento-1), idEvento-1,true);
                 break;
             case 3:
                 System.out.println("--- Definir Período de Submissão ---");
