@@ -37,7 +37,7 @@ public class MenuTerminal {
         }
 
         repositorio.adicionarParticipante(novoParticipante);
-        System.out.println("Usuário '" + nomeCompleto + "' cadastrado com sucesso como " + tipo + "!"); // (Pós-condição do UC1)
+        System.out.println(novoParticipante.getId() +" Usuário '" + nomeCompleto + "' cadastrado com sucesso como " + tipo + "!"); // (Pós-condição do UC1)
         System.out.println("Agora você pode entrar no sistema com seu e-mail.");
     }
 
@@ -283,11 +283,28 @@ public class MenuTerminal {
                 // Chamar co.iniciarEdicaoEvento(idEvento);
                 break;
             case 2:
+                Evento eventoSelecionado = co.meusEventosCriados().get(idEvento-1);
                 System.out.println("'Visualizar Inscritos' (simulado).");
-                (co.meusEventosCriados().get(idEvento-1)).visualizarInscritos();
-                System.out.println("Selecione um Inscrito (id): ");
-                int idParticipante = lerInteiro("", 0, ce.getInscritos().size(), scanner);
-                co.adicionarPresenca(co.meusEventosCriados().get(idEvento-1), idEvento-1,true);
+                eventoSelecionado.visualizarInscritos();
+
+                if(eventoSelecionado.getInscritos().isEmpty()){
+                    System.out.println("Nenhum Inscrito.");
+                }else{
+                    System.out.println("Selecione um Inscrito (id): ");
+                    int idParticipante = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
+                    System.out.println("Participante esteve presente? (Sim-1) (Não-0)");
+                    int bool = lerInteiro("", 0, 1, scanner);
+                    if(bool == 1){
+                        co.adicionarPresenca(co.meusEventosCriados().get(idEvento-1),
+                                idParticipante,true);
+                    }else{
+                        co.adicionarPresenca(co.meusEventosCriados().get(idEvento-1),
+                                idParticipante,false);
+                    }
+
+                }
+
+
                 break;
             case 3:
                 System.out.println("--- Definir Período de Submissão ---");
@@ -313,10 +330,12 @@ public class MenuTerminal {
             return;
         }
         System.out.print("Insira o ID do evento para designar avaliadores: ");
+        co.visualizarMeusEventos();
+
         int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 
         String nomeAvaliador = lerString("Nome do Avaliador (para referência): ", scanner);
-        String emailAvaliador = lerString("Email do Avaliador (deve ter conta no sistema): ", scanner);
+        String emailAvaliador = lerString("Email do Avaliador: ", scanner);
 
         // boolean sucesso = co.designarAvaliador(idEvento, emailAvaliador, nomeAvaliador);
         // if(sucesso) System.out.println("Avaliador designado!"); else System.out.println("Falha.");
@@ -359,18 +378,24 @@ public class MenuTerminal {
         if (cp == null) { System.out.println("Erro: Acesso às funcionalidades de participante não disponível."); return; }
 
         System.out.println("Simulação: Listando seus eventos/trabalhos elegíveis...");
-        cp.impimprimirEventosCertificados();
         if(cp.listaEventosParticipou().isEmpty()){
             System.out.println("Nenhum evento encontrado para emitir certificados");
             return;
         }
         System.out.print("Insira o ID da Referência para emitir o certificado: ");
+        cp.impimprimirEventosCertificados();
         int idReferencia = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 
         // String linkCertificado = cp.emitirCertificado(idReferencia);
         // if(linkCertificado != null) System.out.println("Certificado: " + linkCertificado);
         // else System.out.println("Não foi possível emitir.");
+        cp.emitirCertificado(idReferencia);
         System.out.println("Certificado para referência ID " + idReferencia + " emitido/disponibilizado com sucesso (simulação).");
+        System.out.println("1-Imprimir\n0-Sair");
+        int esc = lerInteiro("", 0, 1, scanner);
+        if(esc == 1){
+            cp.imprimirCertificados();
+        }
     }
 
 

@@ -57,6 +57,7 @@ public class Participante {
        Evento temp =  eventosCriado.stream().filter(evento -> evento.getId()==id).findFirst().orElse(null);
        return temp;
     }
+
     public Inscricao participarEvento(Evento evento){
         Inscricao temp = new Inscricao(true,this);
         evento.adicionarInscricao(temp);
@@ -107,7 +108,7 @@ public class Participante {
     public ArrayList<Evento> listaEventosParticipou(){
         ArrayList<Evento> eventos = new  ArrayList<>();
         for(Evento evento : meusEventos){
-            if(evento.getDataFim().isAfter(LocalDate.now())){
+            if(evento.getDataFim().isBefore(LocalDate.now())){
                 for(Inscricao inscricao : evento.getInscricoes()){
                     if(inscricao.getParticipante().equals(this)){
                         if(inscricao.getPresenca()) {
@@ -130,11 +131,11 @@ public class Participante {
                     if (trabalho.getParticipante().equals(this) && trabalho.getAprovado()) {
                         System.out.println(evento);
                         System.out.println("Participação e Apresentacao");
-                        continue;
                     }
-                    System.out.println(evento);
-                    System.out.println("Apresentacao");
+                    continue;
                 }
+                System.out.println(evento);
+                System.out.println("Apresentacao");
             }
         }
     }

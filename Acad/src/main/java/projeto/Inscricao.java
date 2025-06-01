@@ -8,10 +8,6 @@ public class Inscricao {
     private boolean ativa;
     private Participante participante;
     private boolean presenca;
-    public Inscricao() {
-        this.data = LocalDateTime.now();
-        this.presenca = false;
-    }
 
     public Inscricao( boolean ativa, Participante participante) {
         this.data = LocalDateTime.now();

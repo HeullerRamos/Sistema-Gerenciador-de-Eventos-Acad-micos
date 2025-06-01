@@ -11,7 +11,6 @@ public class AplicacaoPrincipal {
     private static Participante participanteLogado;
 
     public static void main(String[] args) {
-        inicializarParticipantesDeExemplo(); // Para ter contas de teste
         Repositorio repo = Repositorio.getInstancia(); // Obter instância do repositório
 
         boolean rodandoAplicacao = true;
@@ -73,20 +72,6 @@ public class AplicacaoPrincipal {
             } else {
                 MenuTerminal.processarEscolhaMenuPrincipal(escolha, mainController, scanner);
             }
-        }
-    }
-
-    // Este método pode permanecer aqui ou ser movido para uma classe de inicialização/configuração de dados.
-    private static void inicializarParticipantesDeExemplo() {
-        Repositorio repo = Repositorio.getInstancia();
-        if (repo.buscarParticipantePorEmail("org.chefe@example.com") == null) {
-            repo.adicionarParticipante(new Organizador("Chefe Organização", "org.chefe@example.com", "Grande Eventos SA", "Organizador"));
-        }
-        if (repo.buscarParticipantePorEmail("aval.expert@example.com") == null) {
-            repo.adicionarParticipante(new Avaliador("Dr. Expert", "aval.expert@example.com"));
-        }
-        if (repo.buscarParticipantePorEmail("part.comum@example.com") == null) {
-            repo.adicionarParticipante(new Participante("Zé Comum", "part.comum@example.com", "comunidade", "Participante"));
         }
     }
 }

@@ -135,8 +135,7 @@ public class Evento {
     }
     @Override
     public String toString() {
-        return "Evento{" +
-                "id=" + id +
+        return  "id=" + id +
                 "\nnome='" + nome + '\'' +
                 "\ndescricao='" + descricao + '\'' +
                 "\ndataInicio=" + dataInicio +
