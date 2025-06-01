@@ -42,4 +42,57 @@ public class ControllerOrganizador {
 
     }
 
+    public boolean alterarInformacaoEvento(String campoParaAlterar, Object novoValor) {
+        if (this.evento == null) {
+            System.err.println("Erro: Nenhum evento selecionado para edição.");
+            return false;
+        }
+
+        boolean sucesso = true;
+        try {
+            switch (campoParaAlterar.toLowerCase()) {
+                case "nome":
+                    this.evento.setNome((String) novoValor);
+                    break;
+                case "descricao":
+                    this.evento.setDescricao((String) novoValor);
+                    break;
+                case "datainicio":
+                    this.evento.setDataInicio((LocalDate) novoValor);
+                    break;
+                case "datafim":
+                    this.evento.setDataFim((LocalDate) novoValor);
+                    break;
+                case "local":
+                    this.evento.setLocal((String) novoValor);
+                    break;
+                case "capacidade":
+                    this.evento.setCapacidade((Integer) novoValor);
+                    break;
+                default:
+                    System.err.println("Erro: Campo '" + campoParaAlterar + "' desconhecido para edição.");
+                    sucesso = false;
+                    break;
+            }
+            if (sucesso) {
+                // Em um sistema real, você poderia persistir as alterações aqui,
+                // por exemplo, atualizando o evento no Repositorio se ele não for
+                // uma referência direta ao objeto já no repositório.
+                // Se Repositorio.getEventos() retorna cópias, você precisaria de um
+                // Repositorio.atualizarEvento(this.eventoSelecionadoParaEdicao);
+                System.out.println("Informação '" + campoParaAlterar + "' do evento atualizada com sucesso.");
+            }
+        } catch (ClassCastException e) {
+            System.err.println("Erro: Tipo de dado incorreto fornecido para o campo '" + campoParaAlterar + "'.");
+            sucesso = false;
+        } catch (Exception e) {
+            System.err.println("Erro inesperado ao tentar alterar a informação: " + e.getMessage());
+            sucesso = false;
+        }
+        return sucesso;
+    }
+    public Evento getEvento(){
+        return evento;
+    }
+
 }

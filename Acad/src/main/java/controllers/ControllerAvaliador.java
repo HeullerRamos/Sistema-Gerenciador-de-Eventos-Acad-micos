@@ -43,6 +43,10 @@ public class ControllerAvaliador {
         avaliador.avaliarTrabalho(trabalho,nota,comentario);
     }
 
+    public Avaliador criarAvaliador(String nome, String email){
+        return new  Avaliador(nome,email);
+    }
+
     public void selecionarEvento(int id){
         eventoSelecionado = avaliador.selecionarEvento(id);
     }

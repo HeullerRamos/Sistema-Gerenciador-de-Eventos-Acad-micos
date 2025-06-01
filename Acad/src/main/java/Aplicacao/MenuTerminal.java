@@ -256,7 +256,7 @@ public class MenuTerminal {
     private static void acaoGerenciarMeusEventos(MainController mainController, Scanner scanner) {
         System.out.println("\n--- Gerenciar Meus Eventos (UC5) ---");
         ControllerOrganizador co = mainController.getControllerOrganizador();
-        ControllerEvento ce = mainController.getControllerEvento();
+
         if (co == null) { System.out.println("Erro: Acesso às funcionalidades de organizador não disponível."); return; }
 
         System.out.println("Simulação: Listando eventos criados por você...");
@@ -266,8 +266,9 @@ public class MenuTerminal {
         }
         System.out.print("Insira o ID do evento que deseja gerenciar: ");
         co.visualizarMeusEventos();
-        int idEvento = lerInteiro("", 0, co.meusEventosCriados().size(), scanner);
-
+        int idEvento = lerInteiro("", 1, co.meusEventosCriados().size(), scanner);
+        co.selecionarEvento(idEvento);
+        boolean gerenciandoEvento = true;
         System.out.println("Gerenciando Evento ID: " + idEvento);
         System.out.println("Opções de Gerenciamento:");
         System.out.println("1. Editar Informações do Evento");
@@ -276,14 +277,14 @@ public class MenuTerminal {
         System.out.println("0. Voltar");
         System.out.print("Escolha uma opção: ");
         int escolha = lerInteiro("", 0, 3, scanner);
-
+        Evento eventoSelecionado = co.meusEventosCriados().get(idEvento-1);
         switch (escolha) {
             case 1:
                 System.out.println("'Editar Informações do Evento' (simulado).");
-                // Chamar co.iniciarEdicaoEvento(idEvento);
+                menuEditarInformacoesBaseEvento(co, scanner); // Novo método para o submenu de edição
                 break;
             case 2:
-                Evento eventoSelecionado = co.meusEventosCriados().get(idEvento-1);
+
                 System.out.println("'Visualizar Inscritos' (simulado).");
                 eventoSelecionado.visualizarInscritos();
 
@@ -307,11 +308,20 @@ public class MenuTerminal {
 
                 break;
             case 3:
-                System.out.println("--- Definir Período de Submissão ---");
-                LocalDate dataInicioSub = lerData("Data de Início para Submissão (AAAA-MM-DD): ", scanner);
-                LocalDate dataFimSub = lerData("Data de Término para Submissão (AAAA-MM-DD): ", dataInicioSub, scanner);
-                // co.definirPeriodoSubmissao(idEvento, dataInicioSub, dataFimSub);
-                System.out.println("Período de submissão salvo com sucesso (simulado)!");
+                boolean correto = true;
+                do {
+                    System.out.println("--- Definir Período de Submissão ---");
+                    LocalDate dataInicioSub = lerData("Data de Início para Submissão (AAAA-MM-DD): ", scanner);
+                    LocalDate dataFimSub = lerData("Data de Término para Submissão (AAAA-MM-DD): ", dataInicioSub, scanner);
+                    if(eventoSelecionado.getDataInicio().isBefore(dataInicioSub) && eventoSelecionado.getDataInicio().isBefore(dataFimSub)
+                            && eventoSelecionado.getDataFim().isAfter(dataFimSub) && eventoSelecionado.getDataFim().isAfter(dataInicioSub)){
+                        co.definiPeriodoSubmicao(dataInicioSub, dataFimSub);
+                        System.out.println("Período de submissão salvo com sucesso (simulado)!");
+                        correto = false;
+                    }else{
+                        System.out.println("Entradas Invalidadas. A submissao tem que ser dentro do tempo.");
+                    }
+                }while(correto);
                 break;
             case 0: return;
             default: System.out.println("Opção inválida.");
@@ -448,4 +458,68 @@ public class MenuTerminal {
             }
         }
     }
+
+    private static void menuEditarInformacoesBaseEvento(ControllerOrganizador co, Scanner scanner) {
+        Evento eventoAtual = co.getEvento();
+        if(eventoAtual == null) {
+            System.out.println("Evento nulo");
+            return;
+        }
+
+
+        //Evento eventoAtual = co.getEvento(); // Adicionar getter em ControllerOrganizador
+
+        boolean editando = true;
+        while(editando) {
+            System.out.println("\n--- Editando Evento: " + eventoAtual.getNome() + " ---");
+            System.out.println("Qual informação deseja alterar?");
+            System.out.println("1. Nome (Atual: " + eventoAtual.getNome() + ")");
+            System.out.println("2. Descrição (Atual: " + eventoAtual.getDescricao() + ")");
+            System.out.println("3. Data de Início (Atual: " + eventoAtual.getDataInicio() + ")");
+            System.out.println("4. Data de Fim (Atual: " + eventoAtual.getDataFim() + ")");
+            System.out.println("5. Local (Atual: " + eventoAtual.getLocal() + ")");
+            System.out.println("6. Capacidade (Atual: " + eventoAtual.getCapacidade() + ")");
+            System.out.println("0. Concluir Edição deste Evento");
+            System.out.print("Opção: ");
+            int campoEscolha = lerInteiro("", 0, 6, scanner);
+
+            switch (campoEscolha) {
+                case 1:
+                    String novoNome = lerString("Novo nome: ", scanner);
+                    co.alterarInformacaoEvento("nome", novoNome);
+                    break;
+                case 2:
+                    String novaDesc = lerString("Nova descrição: ", scanner);
+                    co.alterarInformacaoEvento("descricao", novaDesc);
+                    break;
+                case 3:
+                    LocalDate novaDataInicio = lerData("Nova data de início (AAAA-MM-DD): ", scanner);
+                    co.alterarInformacaoEvento("datainicio", novaDataInicio);
+                    break;
+                case 4:
+                    LocalDate novaDataFim = lerData("Nova data de fim (AAAA-MM-DD): ", eventoAtual.getDataInicio(), scanner);
+                    co.alterarInformacaoEvento("datafim", novaDataFim);
+                    break;
+                case 5:
+                    String novoLocal = lerString("Novo local: ", scanner);
+                    co.alterarInformacaoEvento("local", novoLocal);
+                    break;
+                case 6:
+                    int novaCap = lerInteiro("Nova capacidade: ", 1, Integer.MAX_VALUE, scanner);
+                    co.alterarInformacaoEvento("capacidade", novaCap);
+                    break;
+                case 0:
+                    editando = false;
+                    System.out.println("Edição do evento concluída.");
+                    break;
+                default:
+                    System.out.println("Opção de campo inválida.");
+                    break;
+            }
+            // Atualizar eventoAtual para refletir mudanças imediatamente no menu, se necessário
+            // (já que os setters modificam o objeto em memória)
+        }
+    }
 }
+
+

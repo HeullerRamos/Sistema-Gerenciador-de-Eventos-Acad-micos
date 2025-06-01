@@ -103,6 +103,35 @@ public class Evento {
     public ArrayList<Inscricao> getInscricoes() {
         return inscricoes;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
     public void adicionarTrabalho(Trabalho trabalho){
         trabalhos.add(trabalho);
     }
