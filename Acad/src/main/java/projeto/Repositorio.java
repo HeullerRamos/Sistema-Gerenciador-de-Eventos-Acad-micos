@@ -20,7 +20,7 @@ public class Repositorio {
 
 
 
-    public void adicicionarParticipante(Participante participante) {
+    public void adicionarParticipante(Participante participante) {
         participantes.add(participante);
     }
 
@@ -53,5 +53,13 @@ public class Repositorio {
 
     public ArrayList<Certificado> getCertificados() {
         return certificados;
+    }
+    public Participante buscarParticipantePorEmail(String email){
+        for(Participante participante:participantes){
+            if(participante.getEmail().equals(email)){
+                return participante;
+            }
+        }
+        return null;
     }
 }

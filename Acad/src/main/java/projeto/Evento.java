@@ -19,7 +19,7 @@ public class Evento {
     Repositorio repositorio = Repositorio.getInstancia();
     private ArrayList<Inscricao> inscricoes = new ArrayList<>();
     private ArrayList<Trabalho> trabalhos = new ArrayList<>();
-
+    private ArrayList<Participante> inscritos = new ArrayList<>();
     public Evento(String nome, String descricao,
            LocalDate dataInicio, LocalDate dataFim, String local, int capacidade,Organizador organizador){
 
@@ -108,6 +108,13 @@ public class Evento {
     }
     public void adicionarInscricao(Inscricao inscricao){
         inscricoes.add(inscricao);
+    }
+    public ArrayList<Participante> getInscritos() {
+        for(Inscricao inscricao:inscricoes){
+            if(inscricao.isAtiva())
+                inscritos.add(inscricao.getParticipante());
+        }
+        return  inscritos;
     }
     public void visualizarInscritos(){
         for (Inscricao inscricao: inscricoes){

@@ -14,6 +14,7 @@ public class Participante {
     private int id;
     private String nome;
     private String email;
+    //private  String senha;
     private String instituicao;
     private String tipo;
     private ArrayList<Evento> meusEventos = new ArrayList<>();
@@ -46,6 +47,8 @@ public class Participante {
     public int getId() {
         return id;
     }
+
+
 
     public ArrayList<Evento> listarEventos(){
         return eventosCriado = repositorio.getEventos();
