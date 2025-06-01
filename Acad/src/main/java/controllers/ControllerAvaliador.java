@@ -12,6 +12,10 @@ public class ControllerAvaliador {
     private ArrayList<Evento> eventos = new ArrayList<>();
     Repositorio repositorio = Repositorio.getInstancia();
 
+    public ControllerAvaliador(Avaliador avaliador) {
+        this.avaliador = avaliador;
+    }
+
     public void avaliarEvento(){
         eventos = avaliador.avaliarEvento();
     }

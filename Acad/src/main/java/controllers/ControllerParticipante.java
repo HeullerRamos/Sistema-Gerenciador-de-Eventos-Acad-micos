@@ -10,6 +10,11 @@ public class ControllerParticipante {
     Evento evento;
     private ArrayList<Evento> eventosParticipou = new ArrayList<>();
     Repositorio repositorio = Repositorio.getInstancia();
+
+    public ControllerParticipante(Participante participante) {
+        this.participante = participante;
+    }
+
     public  Participante cadastrarParticipante
             (String nome, String email, String instituicao, String tipo){
         if(tipo.equals("Organizador")){

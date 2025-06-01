@@ -24,7 +24,7 @@ public class mainController {
      * com base no seu tipo.
      * @param participante O participante ativo (pode ser Organizador, Avaliador, ou Participante base).
      */
-    public MainController(Participante participante) {
+    public mainController(Participante participante) {
         if (participante == null) {
             throw new IllegalArgumentException("O participante não pode ser nulo.");
         }
