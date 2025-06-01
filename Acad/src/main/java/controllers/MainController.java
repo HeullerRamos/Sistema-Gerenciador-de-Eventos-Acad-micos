@@ -5,10 +5,9 @@ import projeto.Avaliador;
 import projeto.Evento;
 import projeto.Organizador;
 import projeto.Participante;
-import projeto.Repositorio; // Suas classes de domínio
 
 import java.time.LocalDate;
-public class mainController {
+public class MainController {
     private Participante participanteAtual; // O participante "logado" ou ativo
     private Repositorio repositorio;
 
@@ -24,7 +23,7 @@ public class mainController {
      * com base no seu tipo.
      * @param participante O participante ativo (pode ser Organizador, Avaliador, ou Participante base).
      */
-    public mainController(Participante participante) {
+    public MainController(Participante participante) {
         if (participante == null) {
             throw new IllegalArgumentException("O participante não pode ser nulo.");
         }

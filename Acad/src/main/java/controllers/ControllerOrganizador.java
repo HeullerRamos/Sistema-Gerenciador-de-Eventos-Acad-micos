@@ -27,5 +27,9 @@ public class ControllerOrganizador {
         evento.setPeriodoInscricaoIni(dataInicio);
         evento.setPeriodoInscricaoFim(dataFim);
     }
+    public void designarAvaliador(String nome, String email){
+        organizador.designarAvaliador(nome,email,evento);
+
+    }
 
 }
