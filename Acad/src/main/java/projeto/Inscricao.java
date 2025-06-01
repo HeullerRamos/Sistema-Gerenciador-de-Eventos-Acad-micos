@@ -32,6 +32,7 @@ public class Inscricao {
         return presenca;
     }
 
+
     public Participante getParticipante() {
         return participante;
     }

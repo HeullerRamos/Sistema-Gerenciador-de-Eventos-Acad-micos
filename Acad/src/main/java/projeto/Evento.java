@@ -14,7 +14,9 @@ public class Evento {
     private String local;
     private int capacidade;
     private Organizador organizador;
-
+    private LocalDate periodoInscricaoIni;
+    private LocalDate periodoInscricaoFim;
+    Repositorio repositorio = Repositorio.getInstancia();
     private ArrayList<Inscricao> inscricoes = new ArrayList<>();
     private ArrayList<Trabalho> trabalhos = new ArrayList<>();
 
@@ -59,6 +61,30 @@ public class Evento {
         return id;
     }
 
+    public static int getProximoId() {
+        return proximoId;
+    }
+
+    public static void setProximoId(int proximoId) {
+        Evento.proximoId = proximoId;
+    }
+
+    public LocalDate getPeriodoInscricaoIni() {
+        return periodoInscricaoIni;
+    }
+
+    public void setPeriodoInscricaoIni(LocalDate periodoInscricaoIni) {
+        this.periodoInscricaoIni = periodoInscricaoIni;
+    }
+
+    public LocalDate getPeriodoInscricaoFim() {
+        return periodoInscricaoFim;
+    }
+
+    public void setPeriodoInscricaoFim(LocalDate periodoInscricaoFim) {
+        this.periodoInscricaoFim = periodoInscricaoFim;
+    }
+
     public Organizador getOrganizador() {
         return organizador;
     }
@@ -83,7 +109,23 @@ public class Evento {
     public void adicionarInscricao(Inscricao inscricao){
         inscricoes.add(inscricao);
     }
-
+    public void visualizarInscritos(){
+        for (Inscricao inscricao: inscricoes){
+    System.out.println("id(" + inscricao.getParticipante().getId()+")" + " nome: " + inscricao.getParticipante().getNome());
+        }
+    }
+    public void setaPresenca(int idAluno,boolean presenca){
+        for(Inscricao inscricao: inscricoes){
+            if(inscricao.getParticipante().getId() == idAluno){
+                inscricao.setPresenca(presenca);
+            }
+        }
+    }
+    public void imprimeEventos(){
+        for(Evento evento : repositorio.getEventos()){
+            System.out.println(evento);
+        }
+    }
     @Override
     public String toString() {
         return "Evento{" +

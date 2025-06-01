@@ -8,6 +8,7 @@ import java.util.UUID;
 public class ControllerParticipante {
     private Participante participante;
     Evento evento;
+    private ArrayList<Evento> eventosParticipou = new ArrayList<>();
     Repositorio repositorio = Repositorio.getInstancia();
     public  Participante cadastrarParticipante
             (String nome, String email, String instituicao, String tipo){
@@ -38,6 +39,20 @@ public class ControllerParticipante {
     public void participarEvento(Evento evento){
         participante.participarEvento(evento);
     }
+    public void listaEventosParticipou(){
+        eventosParticipou = participante.listaEventosParticipou();
+    }
 
+    public void impimprimirEventosCertificados(){
+        participante.imprimirEventosCertificados();
+    }
+
+    public void emitirCertificado(int id){
+        participante.emitirCertificado(id);
+    }
+
+    public void imprimirCertificados(){
+        participante.imprimirCertificados();
+    }
 
 }

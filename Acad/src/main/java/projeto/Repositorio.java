@@ -4,15 +4,19 @@ import java.util.UUID;
 
 public class Repositorio {
     private static final Repositorio instancia = new Repositorio();
+    private ArrayList<Participante> participantes = new ArrayList<>();
+    private ArrayList<Evento> eventos = new ArrayList<>();
+    private ArrayList<Organizador> organizadores = new ArrayList<>();
+    private ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
+    private ArrayList<Certificado> certificados = new ArrayList<>();
+
     private Repositorio(){
 
     }
     public static Repositorio getInstancia(){
         return instancia;
     }
-    private ArrayList<Participante> participantes = new ArrayList<>();
 
-    private ArrayList<Evento> eventos = new ArrayList<>();
 
 
 
@@ -33,7 +37,21 @@ public class Repositorio {
     }
 
     public Evento selecionarEvento(int id){
-       Evento temp = eventos.stream().filter(evento -> evento.getId().equals(id)).findFirst().orElse(null);
+       Evento temp = eventos.stream().filter(evento -> evento.getId()==id).findFirst().orElse(null);
         return temp;
+    }
+    public void adicicionarOrganizador(Organizador organizador) {
+        organizadores.add(organizador);
+    }
+    public void adicionarAvaliacao(Avaliacao avaliacao) {
+        avaliacoes.add(avaliacao);
+    }
+
+    public void adicionarCertificado(Certificado certificado) {
+        certificados.add(certificado);
+    }
+
+    public ArrayList<Certificado> getCertificados() {
+        return certificados;
     }
 }
