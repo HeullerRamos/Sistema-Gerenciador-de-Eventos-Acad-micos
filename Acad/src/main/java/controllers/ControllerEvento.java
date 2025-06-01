@@ -17,6 +17,7 @@ public class ControllerEvento {
                               LocalDate dataFim, String local, int capacidade, Organizador organizador){
         Evento evento = new Evento(nome,descricao,dataInicio,dataFim,local,capacidade,organizador);
         repositorio.adicicionarEvento(evento);
+        organizador.getMeusEventosCriado().add(evento);
         return evento;
     }
 

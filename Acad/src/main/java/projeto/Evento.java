@@ -21,7 +21,8 @@ public class Evento {
     private ArrayList<Trabalho> trabalhos = new ArrayList<>();
     private ArrayList<Participante> inscritos = new ArrayList<>();
     public Evento(String nome, String descricao,
-           LocalDate dataInicio, LocalDate dataFim, String local, int capacidade,Organizador organizador){
+                  LocalDate dataInicio, LocalDate dataFim, String local,
+                  int capacidade,Organizador organizador){
 
         this.id = proximoId++;
         this.nome = nome;
@@ -104,7 +105,6 @@ public class Evento {
     }
     public void adicionarTrabalho(Trabalho trabalho){
         trabalhos.add(trabalho);
-
     }
     public void adicionarInscricao(Inscricao inscricao){
         inscricoes.add(inscricao);
@@ -137,12 +137,12 @@ public class Evento {
     public String toString() {
         return "Evento{" +
                 "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataFim=" + dataFim +
-                ", local='" + local + '\'' +
-                ", capacidade=" + capacidade +
+                "\nnome='" + nome + '\'' +
+                "\ndescricao='" + descricao + '\'' +
+                "\ndataInicio=" + dataInicio +
+                "\ndataFim=" + dataFim +
+                "\nlocal='" + local + '\'' +
+                "\ncapacidade=" + capacidade +
                 '}';
     }
 }

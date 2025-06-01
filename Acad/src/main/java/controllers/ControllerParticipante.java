@@ -15,22 +15,29 @@ public class ControllerParticipante {
         this.participante = participante;
     }
 
-    public  Participante cadastrarParticipante
-            (String nome, String email, String instituicao, String tipo){
-        if(tipo.equals("Organizador")){
-            return new Organizador(nome,email,instituicao,tipo);
-        }
-        else if(tipo.equals("Avaliador")){
-            //Tem que adicionar neh
-        }
-        tipo = "Participante";
-        return new Participante(nome,email,instituicao,tipo);
-    }
+//    public  Participante cadastrarParticipante
+//            (String nome, String email, String instituicao, String tipo){
+//        if(tipo.equals("Organizador")){
+//            return new Organizador(nome,email,instituicao,tipo);
+//        }
+//        else if(tipo.equals("Avaliador")){
+//            //Tem que adicionar neh
+//        }
+//        tipo = "Participante";
+//        return new Participante(nome,email,instituicao,tipo);
+//    }
 
     public ArrayList<Evento> listarEventos(){
         ArrayList<Evento> eventos = repositorio.getEventos();
         //LocalDate hoje = LocalDate.now();
         return eventos;
+    }
+    public void imprimirEventos(ArrayList<Evento> eventos){
+        participante.imprimirEventos(eventos);
+    }
+
+    public ArrayList<Evento> retornaMeusEventos(){
+        return participante.retornaMeusEventos();
     }
 
     public Evento selecionarEvento(int id){
@@ -44,8 +51,8 @@ public class ControllerParticipante {
     public void participarEvento(Evento evento){
         participante.participarEvento(evento);
     }
-    public void listaEventosParticipou(){
-        eventosParticipou = participante.listaEventosParticipou();
+    public ArrayList<Evento> listaEventosParticipou(){
+        return participante.listaEventosParticipou();
     }
 
     public void impimprimirEventosCertificados(){

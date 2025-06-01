@@ -12,8 +12,12 @@ public class Organizador extends Participante{
         super(nome,email,instituicao,tipo);
     }
 
-    public void cadastrarEvento(String nome, String descricao,LocalDate dataInicio,
-                                LocalDate dataFim, String local, int capacidade,Organizador organizador){
+    public ArrayList<Evento> getMeusEventosCriado() {
+        return meusEventosCriado;
+    }
+
+    public void cadastrarEvento(String nome, String descricao, LocalDate dataInicio,
+                                LocalDate dataFim, String local, int capacidade, Organizador organizador){
 
         Evento temp = new Evento(nome,descricao,dataInicio,dataFim,local,capacidade,organizador);
         meusEventosCriado.add(temp);
@@ -54,5 +58,4 @@ public class Organizador extends Participante{
         avaliador.setEventosParaAvaliar(this.selecionarEvento(evento.getId()));
         return avaliador;
     }
-
 }

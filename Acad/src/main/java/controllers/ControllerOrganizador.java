@@ -4,6 +4,7 @@ import projeto.Evento;
 import projeto.Organizador;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ControllerOrganizador {
     private Organizador organizador;
@@ -17,6 +18,15 @@ public class ControllerOrganizador {
                                  LocalDate dataFim, String local, int capacidade, Organizador organizador) {
         organizador.cadastrarEvento(nome,descricao,dataInicio,dataFim,local,capacidade,organizador);
     }
+
+    public ArrayList<Evento> meusEventosCriados(){
+        return organizador.getMeusEventosCriado();
+    }
+
+    public void visualizarMeusEventos(){
+        organizador.visualizarMeusEventos();
+    }
+
     public Evento selecionarEvento(int id){
        return evento = organizador.selecionarEvento(id);
     }

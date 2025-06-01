@@ -143,6 +143,7 @@ public class MenuTerminal {
             if (eventoSelecionado.getInscritos() != null && eventoSelecionado.getInscritos().size() >= eventoSelecionado.getCapacidade()) {
                 System.out.println("O evento está lotado.");
             } else {
+                cp.participarEvento(eventos.get(escolhaIndice - 1));
                 System.out.println("Inscrição realizada com sucesso (simulado)!");
             }
         }
@@ -155,6 +156,12 @@ public class MenuTerminal {
         if (cp == null) { System.out.println("Erro: Acesso às funcionalidades de participante não disponível."); return; }
 
         System.out.println("Simulação: Listando seus eventos inscritos que aceitam submissão...");
+        if(cp.retornaMeusEventos().isEmpty()){
+            System.out.println("Você não está inscrito em nenhum evento");
+            return;
+        }
+
+        cp.imprimirEventos(cp.retornaMeusEventos());
         System.out.print("Insira o ID do evento no qual deseja submeter o trabalho: ");
         int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 
@@ -204,7 +211,12 @@ public class MenuTerminal {
         if (co == null) { System.out.println("Erro: Acesso às funcionalidades de organizador não disponível."); return; }
 
         System.out.println("Simulação: Listando eventos criados por você...");
+        if(co.meusEventosCriados().isEmpty()){
+            System.out.println("Nenhum Evento Criado por você.");
+            return;
+        }
         System.out.print("Insira o ID do evento que deseja gerenciar: ");
+        co.visualizarMeusEventos();
         int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 
         System.out.println("Gerenciando Evento ID: " + idEvento);
@@ -244,6 +256,10 @@ public class MenuTerminal {
         if (co == null) { System.out.println("Erro: Acesso às funcionalidades de organizador não disponível."); return; }
 
         System.out.println("Simulação: Listando seus eventos...");
+        if(co.meusEventosCriados().isEmpty()){
+            System.out.println("Nenhum Evento Criado por você.");
+            return;
+        }
         System.out.print("Insira o ID do evento para designar avaliadores: ");
         int idEvento = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 
@@ -291,6 +307,11 @@ public class MenuTerminal {
         if (cp == null) { System.out.println("Erro: Acesso às funcionalidades de participante não disponível."); return; }
 
         System.out.println("Simulação: Listando seus eventos/trabalhos elegíveis...");
+        cp.impimprimirEventosCertificados();
+        if(cp.listaEventosParticipou().isEmpty()){
+            System.out.println("Nenhum evento encontrado para emitir certificados");
+            return;
+        }
         System.out.print("Insira o ID da Referência para emitir o certificado: ");
         int idReferencia = lerInteiro("", 1, Integer.MAX_VALUE, scanner);
 

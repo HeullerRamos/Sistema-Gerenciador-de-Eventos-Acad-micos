@@ -60,6 +60,7 @@ public class Participante {
     public Inscricao participarEvento(Evento evento){
         Inscricao temp = new Inscricao(true,this);
         evento.adicionarInscricao(temp);
+        meusEventos.add(evento);
         return temp;
     }
 
@@ -77,6 +78,11 @@ public class Participante {
 
         return meusEventos;
     }
+
+    public ArrayList<Evento> retornaMeusEventos() {
+        return meusEventos;
+    }
+
     public ArrayList<Evento> meusEventosConcluidos(){
         ArrayList<Evento> meusEventosFin = new ArrayList<>();
 
@@ -94,6 +100,7 @@ public class Participante {
             System.out.println(evento);
         }
     }
+
     public void submeterTrabalho(Evento evento,String nome,boolean ativo){
         evento.adicionarTrabalho(new Trabalho(nome,ativo));
     }
@@ -115,17 +122,20 @@ public class Participante {
 
     public void imprimirEventosCertificados(){
         ArrayList<Evento> eventos = listaEventosParticipou();
-        for(Evento evento : eventos){
-            for(Trabalho trabalho : evento.getTrabalhos()){
-                if(trabalho.getParticipante().equals(this) && trabalho.getAprovado()){
+        if(eventos.isEmpty()){
+            return;
+        }else {
+            for (Evento evento : eventos) {
+                for (Trabalho trabalho : evento.getTrabalhos()) {
+                    if (trabalho.getParticipante().equals(this) && trabalho.getAprovado()) {
+                        System.out.println(evento);
+                        System.out.println("Participação e Apresentacao");
+                        continue;
+                    }
                     System.out.println(evento);
-                    System.out.println("Participação e Apresentacao");
-                    continue;
+                    System.out.println("Apresentacao");
                 }
-                System.out.println(evento);
-                System.out.println("Apresentacao");
             }
-
         }
     }
 
