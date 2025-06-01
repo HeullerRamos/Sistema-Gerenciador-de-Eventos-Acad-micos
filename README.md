@@ -6,55 +6,34 @@ Visão Geral
 
 O SGEA visa facilitar o gerenciamento de eventos como semanas acadêmicas, workshops e palestras, permitindo:
 
-•
-Cadastro de eventos (nome, descrição, datas, local, capacidade).
+• Cadastro de eventos (nome, descrição, datas, local, capacidade).
 
-•
-Cadastro de usuários (participantes, organizadores, avaliadores).
+• Cadastro de usuários (participantes, organizadores, avaliadores).
 
-•
-Inscrição de participantes em eventos.
+• Inscrição de participantes em eventos.
 
-•
-Submissão e avaliação de trabalhos acadêmicos.
+• Submissão e avaliação de trabalhos acadêmicos.
 
-•
-Emissão de certificados de participação e apresentação.
+• Emissão de certificados de participação e apresentação.
 
 O desenvolvimento focou na aplicação dos princípios GRASP para alcançar alta coesão e baixo acoplamento nas classes do projeto.
 
 Tecnologias
 
-•
-Linguagem: Java
+• Linguagem: Java
 
-•
-Gerenciador de Dependências/Build: Apache Maven
+• Gerenciador de Dependências/Build: Apache Maven
 
 Como Executar
 
-1.
-Pré-requisitos: JDK (Java Development Kit) e Apache Maven instalados.
+1. Pré-requisitos: JDK (Java Development Kit) e Apache Maven instalados.
 
-2.
-Clone o repositório:
+2. Clone o repositório:
 
-3.
-Navegue até o diretório do projeto Maven:
+3. Navegue até o diretório do projeto Maven:
 
-4.
-Compile o projeto:
+4. Compile o projeto:
 
-5.
-Execute a aplicação (exemplo com a classe Main):
+5. Execute a aplicação (exemplo com a classe Main):
 
-Estrutura
-
-•
-Acad/src/main/java: Contém o código-fonte Java, organizado em pacotes (projeto, controllers, Aplicacao).
-
-•
-Acad/pom.xml: Arquivo de configuração do Maven.
-
-(Nota: Conforme a especificação da atividade, diagramas deveriam estar em uma pasta 'doc', não presente neste clone inicial)..
 
